@@ -1,0 +1,52 @@
+name: Release
+on:
+  # Triggers the workflow on push or pull request events but only for selected branch
+  push:
+    branches:
+      - main
+      - next
+      - beta
+      - alpha
+#
+permissions:
+  contents: read # for checkout
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains jobs called "release"
+  release:
+    #
+    name: Publish a Github release
+    #
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
+    #
+    strategy:
+      matrix:
+        node-version: [20.x]
+    #
+    steps:
+      # Checks-out your repository under $github.workspace, so your job can access it
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      #
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      #
+      - name: Install dependencies
+        run: npm clean-install
+      #
+      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
+        run: npm audit signatures
+      #
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
