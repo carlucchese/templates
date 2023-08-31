@@ -1,0 +1,80 @@
+# This workflow uses actions that are not certified by GitHub.
+# GitHub recommends pinning actions to a commit SHA.
+# To get a newer version, you will need to update the SHA.
+# You can also reference a tag or branch, but the action may change without warning.
+
+name: ci
+
+on:
+  # Triggers the workflow on push or pull request events but only for selected branch
+  push:
+    branches:
+      - main
+      - next
+      - beta
+      - alpha
+    tags:
+      - "v*"  
+env:
+  DIR_NODE_NAME: node-18.17.0
+  DIR_TEMPLATES: templates
+
+jobs:
+  # This workflow contains jobs called "docker"
+  docker:
+    name: Docker build and push
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            ${{ vars.REGISTRY_USER }}/${{ vars.FRAMEWORK_NAME }}${{ vars.FRAMEWORK_VERSION }}
+            ghcr.io/${{ vars.REGISTRY_USER }}/${{ vars.FRAMEWORK_NAME }}${{ vars.FRAMEWORK_VERSION }}
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=schedule
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=ref,event=pr
+            type=sha
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        # if: github.event_name == 'push'
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to GHCR
+      # if: github.event_name == 'push'
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ${{ env.DIR_TEMPLATES }}/${{ vars.FRAMEWORK_NAME }}-${{ vars.FRAMEWORK_VERSION }}/${{ vars.DIR_NODE_NAME }}/
+          file: ${{ env.DIR_TEMPLATES }}/${{ vars.FRAMEWORK_NAME }}-${{ vars.FRAMEWORK_VERSION }}/${{ env.DIR_NODE_NAME }}/Dockerfile
+          push: true
+          flavor: |
+            latest=auto
+            prefix=v
+            suffix=
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: |
+            ${{ steps.meta.outputs.labels }}    
+            org.opencontainers.image.title=NestJS
+            org.opencontainers.image.description=Access a trusted templates of ready-to-use docker images designed to speed development, deployment, and running of applications in containerized environments.
+            org.opencontainers.image.vendor=Carluchese, Principal Software Engineer/Architect
