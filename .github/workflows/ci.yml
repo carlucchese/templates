@@ -14,11 +14,7 @@ on:
       - beta
       - alpha
     tags:
-      - "v*"  
-env:
-  DIR_NODE_NAME: node-18.17.0
-  DIR_TEMPLATES: templates
-
+      - "v*"
 jobs:
   # This workflow contains jobs called "docker"
   docker:
@@ -35,8 +31,8 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ${{ vars.REGISTRY_USER }}/${{ vars.FRAMEWORK_NAME }}${{ vars.FRAMEWORK_VERSION }}
-            ghcr.io/${{ vars.REGISTRY_USER }}/${{ vars.FRAMEWORK_NAME }}${{ vars.FRAMEWORK_VERSION }}
+            ${{ env.REGISTRY_USER }}/${{ env.FRAMEWORK_NAME }}${{ env.FRAMEWORK_VERSION }}
+            ghcr.io/${{ env.REGISTRY_USER }}/${{ env.FRAMEWORK_NAME }}${{ env.FRAMEWORK_VERSION }}
           # generate Docker tags based on the following events/attributes
           tags: |
             type=schedule
@@ -45,6 +41,7 @@ jobs:
             type=semver,pattern={{major}}
             type=ref,event=pr
             type=sha
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
@@ -56,7 +53,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Login to GHCR
-      # if: github.event_name == 'push'
+        # if: github.event_name == 'push'
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -65,8 +62,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ${{ env.DIR_TEMPLATES }}/${{ vars.FRAMEWORK_NAME }}-${{ vars.FRAMEWORK_VERSION }}/${{ vars.DIR_NODE_NAME }}/
-          file: ${{ env.DIR_TEMPLATES }}/${{ vars.FRAMEWORK_NAME }}-${{ vars.FRAMEWORK_VERSION }}/${{ env.DIR_NODE_NAME }}/Dockerfile
+          context: ${{ env.DIR_TEMPLATES }}/${{ env.FRAMEWORK_NAME }}-${{ env.FRAMEWORK_VERSION }}/${{ env.DIR_NODE_NAME }}/
+          file: ${{ env.DIR_TEMPLATES }}/${{ env.FRAMEWORK_NAME }}-${{ env.FRAMEWORK_VERSION }}/${{ env.DIR_NODE_NAME }}/Dockerfile
           push: true
           flavor: |
             latest=auto
