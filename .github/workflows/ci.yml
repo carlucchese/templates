@@ -22,6 +22,13 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-22.04
     # Steps represent a sequence of tasks that will be executed as part of the job
+    env:
+      REGISTRY_USER: ${{ vars.REGISTRY_USER }}
+      FRAMEWORK_NAME: ${{ vars.FRAMEWORK_NAME }}
+      FRAMEWORK_VERSION: ${{ vars.FRAMEWORK_VERSION }}
+      DIR_NODE_NAME: ${{ vars.DIR_NODE_NAME }}
+      DIR_TEMPLATES: ${{ vars.DIR_TEMPLATES }}
+    # Steps
     steps:
       - name: Checkout
         uses: actions/checkout@v3
