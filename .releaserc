@@ -10,7 +10,7 @@
         },
         {
             "name": "alpha",
-            "prerelease": true
+            "prerelease": false
         }
     ]
 }
