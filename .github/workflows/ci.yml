@@ -3,7 +3,7 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: ci-ghcr
+name: ci
 
 on:
   # Triggers the workflow on push or pull request events but only for selected branch
@@ -22,11 +22,11 @@ jobs:
     runs-on: ubuntu-22.04
     # Steps represent a sequence of tasks that will be executed as part of the job
     env:
-      REGISTRY_USER: ${{ env.REGISTRY_USER }}
-      FRAMEWORK_NAME: ${{ env.FRAMEWORK_NAME }}
-      FRAMEWORK_VERSION: ${{ env.FRAMEWORK_VERSION }}
-      DIR_NODE_NAME: ${{ env.DIR_NODE_NAME }}
-      DIR_TEMPLATES: ${{ env.DIR_TEMPLATES }}
+      REGISTRY_USER: ${{ vars.REGISTRY_USER }}
+      FRAMEWORK_NAME: ${{ vars.FRAMEWORK_NAME }}
+      FRAMEWORK_VERSION: ${{ vars.FRAMEWORK_VERSION }}
+      DIR_NODE_NAME: ${{ vars.DIR_NODE_NAME }}
+      DIR_TEMPLATES: ${{ vars.DIR_TEMPLATES }}
     # Steps
     steps:
       - name: Check if it's a semantic-release tag
