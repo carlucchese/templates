@@ -4,7 +4,7 @@
   "description": "Access a trusted templates of ready-to-use docker images designed to speed development, deployment, and running of applications in containerized environments.",
   "author": "Carlos",
   "private": true,
-  "license": "LGPL-3.0-or-later",
+  "license": "MIT",
   "scripts": {
     "semantic-release": "semantic-release"
   },

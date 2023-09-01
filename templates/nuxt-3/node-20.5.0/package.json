@@ -4,7 +4,7 @@
   "description": "Nuxt Framework version 3 and Nodejs version 20.5.0",
   "author": "Carlos",
   "private": true,
-  "license": "LGPL-3.0-or-later",
+  "license": "MIT",
   "scripts": {
     "semantic-release": "semantic-release",
     "build": "nuxt build",
