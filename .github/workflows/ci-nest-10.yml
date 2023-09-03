@@ -52,24 +52,21 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # - name: Login to GitHub Container Registry
-      #   if: github.event_name == 'push' && (github.ref == 'refs/heads/next' | github.ref == 'refs/heads/nest-10')
-      #   uses: docker/login-action@v2
-      #   with:
-      #     registry: ghcr.io
-      #     username: ${{ github.actor }}
-      #     password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to GitHub Container Registry
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/nest-10')
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Build and push Docker image
-      #   if: github.event_name == 'push' && (github.ref == 'refs/heads/nest-10')
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     context: ${{ env.DIR_TEMPLATES }}/${{ env.FRAMEWORK_NAME }}-${{ env.FRAMEWORK_VERSION }}/${{ env.DIR_NODE_NAME }}/
-      #     file: ${{ env.DIR_TEMPLATES }}/${{ env.FRAMEWORK_NAME }}-${{ env.FRAMEWORK_VERSION }}/${{ env.DIR_NODE_NAME }}/Dockerfile
-      #     push: true
-      #     tags: ${{ steps.meta.outputs.tags }}
-      #     labels: |
-      #       ${{ steps.meta.outputs.labels }}
-      #       org.opencontainers.image.title=NestJS
-      #       org.opencontainers.image.description=Access a trusted templates of ready-to-use docker images designed to speed development, deployment, and running of applications in containerized environments.
-      #       org.opencontainers.image.vendor=Carluchese, Principal Software Engineer/Architect
+      - name: Build and push Docker image
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/nest-10')
+        uses: docker/build-push-action@v4
+        with:
+          context: ${{ env.DIR_TEMPLATES }}/${{ env.FRAMEWORK_NAME }}-${{ env.FRAMEWORK_VERSION }}/${{ env.DIR_NODE_NAME }}/
+          file: ${{ env.DIR_TEMPLATES }}/${{ env.FRAMEWORK_NAME }}-${{ env.FRAMEWORK_VERSION }}/${{ env.DIR_NODE_NAME }}/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: |
+            ${{ steps.meta.outputs.labels }}
