@@ -70,6 +70,6 @@ jobs:
           context: ${{ env.DIR_TEMPLATES }}/${{ env.FRAMEWORK_NAME }}-${{ env.FRAMEWORK_VERSION }}/${{ env.DIR_NODE_NAME }}/
           file: ${{ env.DIR_TEMPLATES }}/${{ env.FRAMEWORK_NAME }}-${{ env.FRAMEWORK_VERSION }}/${{ env.DIR_NODE_NAME }}/Dockerfile
           push: true
-          tags: ${{ needs.build.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: |
             ${{ steps.meta.outputs.labels }}
