@@ -10,20 +10,21 @@ on:
   push:
     branches:
       - nest-10
+#
+env:
+  REGISTRY_USER: ${{ vars.REGISTRY_USER }}
+  FRAMEWORK_NAME: ${{ vars.FRAMEWORK_NAME }}
+  FRAMEWORK_VERSION: ${{ vars.FRAMEWORK_VERSION }}
+  DIR_NODE_NAME: ${{ vars.DIR_NODE_NAME }}
+  DIR_TEMPLATES: ${{ vars.DIR_TEMPLATES }}
+#
 jobs:
   # This workflow contains jobs called "docker"
-  docker-nestj:
+  build:
     name: Docker build and push
     # The type of runner that the job will run on
     runs-on: ubuntu-22.04
     # Steps represent a sequence of tasks that will be executed as part of the job
-    env:
-      REGISTRY_USER: ${{ vars.REGISTRY_USER }}
-      FRAMEWORK_NAME: ${{ vars.FRAMEWORK_NAME }}
-      FRAMEWORK_VERSION: ${{ vars.FRAMEWORK_VERSION }}
-      DIR_NODE_NAME: ${{ vars.DIR_NODE_NAME }}
-      DIR_TEMPLATES: ${{ vars.DIR_TEMPLATES }}
-    # Steps
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -42,6 +43,7 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -61,12 +63,13 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
+        id: build
         if: github.event_name == 'push' && (github.ref == 'refs/heads/nest-10')
         uses: docker/build-push-action@v4
         with:
           context: ${{ env.DIR_TEMPLATES }}/${{ env.FRAMEWORK_NAME }}-${{ env.FRAMEWORK_VERSION }}/${{ env.DIR_NODE_NAME }}/
           file: ${{ env.DIR_TEMPLATES }}/${{ env.FRAMEWORK_NAME }}-${{ env.FRAMEWORK_VERSION }}/${{ env.DIR_NODE_NAME }}/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ needs.build.outputs.tags }}
           labels: |
             ${{ steps.meta.outputs.labels }}
