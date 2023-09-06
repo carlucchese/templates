@@ -3,7 +3,7 @@
   "version": "0.0.0-development",
   "description": "Access a trusted templates of ready-to-use docker images designed to speed development, deployment, and running of applications in containerized environments.",
   "author": "Carlos",
-  "private": false,
+  "private": true,
   "license": "MIT",
   "scripts": {
     "semantic-release": "semantic-release"
