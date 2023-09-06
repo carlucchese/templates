@@ -6,12 +6,6 @@
 https://hub.docker.com/repositories/carlucchese
 ```
 
-## GHRC Repository
-
-```docker
-https://github.com/carlucchese/docker-templates/pkgs/container/nest10
-```
-
 ## Images based on `alpine`
 
 .
