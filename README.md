@@ -26,7 +26,7 @@ docker pull carlucchese/nest10:vin
 ```
 
 ```docker
-docker pull carlucchese/nuxt3:vin
+docker pull carlucchese/nuxt3:buo
 ```
 
 You can find a [list of packages for each framework](./docs/PACKAGES.md) in the
