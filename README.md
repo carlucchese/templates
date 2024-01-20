@@ -16,17 +16,17 @@ Please review the installation instructions according to your operating system a
 
 ## Frameworks
 
-- Docker custom images for Nestj10.
-- Docer custom images for Nuxt3.
+- Docker custom images for Nest 10.
+- Docer custom images for Nuxt 3.
 
 ## Usage examples
 
 ```docker
-docker pull carlucchese/nest10:beta
+docker pull carlucchese/nest10:vin
 ```
 
 ```docker
-docker pull carlucchese/nuxt3:beta
+docker pull carlucchese/nuxt3:buo
 ```
 
 You can find a [list of packages for each framework](./docs/PACKAGES.md) in the
