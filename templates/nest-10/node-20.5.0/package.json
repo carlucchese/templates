@@ -1,7 +1,7 @@
 {
-    "name": "nestjs",
+    "name": "nest10-buo",
     "version": "0.0.0-development",
-    "description": "Nestjs Framework version 10 and Nodejs version 20.5.0",
+    "description": "Nestjs Framework version 10 and Nodejs version 18.17.0",
     "author": "Carlos",
     "private": true,
     "license": "MIT",
