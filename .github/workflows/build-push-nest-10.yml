@@ -31,7 +31,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY_USER }}/${{ env.FRAMEWORK_NAME }}${{ env.FRAMEWORK_VERSION }}
           tags: |
-            type=raw,value=vin,priority=100,enable=${{ github.ref == format('refs/heads/{0}', 'nest-10') }}
+            type=raw,value=buo,priority=100,enable=${{ github.ref == format('refs/heads/{0}', 'nest-10') }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
