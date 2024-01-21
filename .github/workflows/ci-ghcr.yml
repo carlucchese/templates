@@ -9,7 +9,8 @@ on:
   # Triggers the workflow on push or pull request events but only for selected branch
   push:
     branches:
-      - nest-10
+      - main
+      # - nest-10
 #
 env:
   REGISTRY_USER: ${{ vars.REGISTRY_USER }}
