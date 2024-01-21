@@ -1,5 +1,5 @@
 # Base image for production
-FROM node:18.17.0-alpine3.18
+FROM node:18.19.0-alpine3.18
 # Dependencies for Prisma
 RUN apk add --update --no-cache openssl1.1-compat
 RUN apk add --no-cache libgcc libstdc++ libssl1.1
