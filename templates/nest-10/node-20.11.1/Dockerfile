@@ -1,8 +1,7 @@
 # Base image for production
-FROM node:20.11.1-alpine3.19
+FROM node:20.11.1-alpine3.18
 # Dependencies for Prisma
-RUN apk add --update --no-cache openssl1.1-compat
-RUN apk add --no-cache libgcc libstdc++ libssl1.1
+RUN apk add --update --no-cache libgcc libstdc++ libssl1.1
 # Directory for nestjs
 WORKDIR /usr/src/nestjs
 # Nestj version 10  and Nx must be copied to work directory 
