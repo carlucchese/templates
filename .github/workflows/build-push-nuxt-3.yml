@@ -20,7 +20,7 @@ env:
 jobs:
   nest-10:
     name: Docker build and push
-    runs-on: ubuntu-23.10
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
