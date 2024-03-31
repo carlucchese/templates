@@ -14,11 +14,11 @@ env:
   REGISTRY_USER: ${{ vars.REGISTRY_USER }}
   FRAMEWORK_NAME: nuxt
   FRAMEWORK_VERSION: 3
-  DIR_NODE_NAME: node-18.20.0
+  DIR_NODE_NAME: ${{ vars.NODE_NUXT_3 }}
   DIR_TEMPLATES: ${{ vars.DIR_TEMPLATES }}
 
 jobs:
-  nest-10:
+  nuxt-3:
     name: Docker build and push
     runs-on: ubuntu-22.04
     steps:
