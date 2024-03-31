@@ -1,4 +1,4 @@
-# Base image for production
+it pu# Base image for production
 FROM node:18.17.0-alpine3.18
 
 # Directory for nestjs
