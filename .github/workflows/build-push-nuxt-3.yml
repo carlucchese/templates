@@ -14,7 +14,7 @@ env:
   REGISTRY_USER: ${{ vars.REGISTRY_USER }}
   FRAMEWORK_NAME: nuxt
   FRAMEWORK_VERSION: 3
-  DIR_NODE_NAME: ${{ vars.NODE_NUXT_3 }}
+  DIR_NODE_NAME: ${{ vars.DIR_NODE_NAME }}
   DIR_TEMPLATES: ${{ vars.DIR_TEMPLATES }}
 
 jobs:
